@@ -1,0 +1,13 @@
+ferteixeiraportfolio/
+│
+├── index.md
+├── _config.yml
+├── README.md
+│
+├── assets/
+│   └── banner.png  (optional later)
+│
+├── case-studies/
+│   ├── technical-support.md
+│   ├── security-engineer.md
+│   └── technical-writer.md
