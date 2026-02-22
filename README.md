@@ -57,5 +57,5 @@ United Kingdom
 ---
 
 ## Contact
-LinkedIn: (Add link)
-Email: (Add professional email)
+LinkedIn: https://www.linkedin.com/in/ferteixeira
+Email: gtex2018@gmail.com
