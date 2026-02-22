@@ -1,1 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fernando Teixeira | Technical Support & Cybersecurity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --accent: #00c8ff;
+    --accent2: #0077ff;
+    --gold: #f0a500;
+    --text: #e8edf2;
+    --muted: #7a8899;
+    --border: rgba(0,200,255,0.12);
+    --card: rgba(13,20,30,0.9);
+  }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(8,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,119,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,200,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(0,200,255,0.3);
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.4s;
+  }
+
+  h1 .line2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,200,255,0.4);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.6s;
+  }
+
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent2);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    color: var(--bg);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,200,255,0.25);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(0,200,255,0.5);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  /* Hero stats bar */
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 1s;
+    flex-wrap: wrap;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    height: 1px;
+    width: 40px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg2); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(0,200,100,0.08);
+    border: 1px solid rgba(0,200,100,0.25);
+    color: #00c864;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    margin-top: 1.5rem;
+  }
+
+  .availability-badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: #00c864;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00c864;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Skills grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .skill-pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 0.65rem 1rem;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.2s;
+  }
+
+  .skill-pill:hover {
+    border-color: rgba(0,200,255,0.3);
+    color: var(--text);
+    transform: translateX(3px);
+  }
+
+  .skill-pill::before {
+    content: '//';
+    color: var(--accent);
+    font-size: 0.65rem;
+    opacity: 0.6;
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--bg); }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    opacity: 0.3;
+  }
+
+  .job {
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .job::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem; top: 2rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent2);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 12px var(--accent2);
+  }
+
+  .job:hover {
+    border-color: rgba(0,200,255,0.25);
+    transform: translateX(4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .job-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .job-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    white-space: nowrap;
+    margin-top: 0.2rem;
+  }
+
+  .job-company {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .job-company .contract-tag {
+    background: rgba(240,165,0,0.1);
+    border: 1px solid rgba(240,165,0,0.25);
+    color: var(--gold);
+    font-size: 0.62rem;
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .job-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .job-bullets li {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.65;
+  }
+
+  .job-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+    top: 0.15rem;
+  }
+
+  .job-bullets li strong { color: var(--text); font-weight: 500; }
+
+  /* ── CASE STUDIES ── */
+  #case-studies { background: var(--bg2); }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .case-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .case-card:hover { border-color: rgba(0,200,255,0.25); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+  .case-card:hover::before { transform: scaleX(1); }
+
+  .case-icon {
+    width: 44px; height: 44px;
+    background: rgba(0,119,255,0.1);
+    border: 1px solid rgba(0,119,255,0.2);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .case-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .case-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .case-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .case-metric {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    background: rgba(240,165,0,0.08);
+    border: 1px solid rgba(240,165,0,0.2);
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+  }
+
+  .case-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+
+  .case-link:hover { gap: 0.7rem; }
+
+  /* ── CERTS ── */
+  #certifications { background: var(--bg); }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 1.2rem 1.5rem;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.2s;
+  }
+
+  .cert-item:hover { border-color: rgba(0,200,255,0.3); transform: translateX(3px); }
+
+  .cert-icon {
+    width: 36px; height: 36px;
+    background: rgba(0,200,255,0.08);
+    border: 1px solid rgba(0,200,255,0.15);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--bg2);
+    text-align: center;
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-inner p {
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 6rem 1.5rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .cases-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">FT<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#case-studies">Case Studies</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for Permanent Roles · Greater London · c.£45k</div>
+    <h1>Fernando<br><span class="line2">Teixeira</span></h1>
+    <p class="hero-sub">
+      <strong>Senior Technical Support &amp; Cybersecurity Engineer</strong> with 20+ years resolving enterprise-grade incidents across EDR, DLP, CASB, and Microsoft 365 ecosystems.
+    </p>
+    <div class="hero-actions">
+      <a href="#case-studies" class="btn-primary">View Case Studies →</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num">20+</span>
+        <span class="stat-label">Years Enterprise Experience</span>
+      </div>
+      <div>
+        <span class="stat-num">40–60%</span>
+        <span class="stat-label">Ticket Volume Reduction</span>
+      </div>
+      <div>
+        <span class="stat-num">L3</span>
+        <span class="stat-label">Escalation Engineer · EMEA</span>
+      </div>
+      <div>
+        <span class="stat-num">4</span>
+        <span class="stat-label">Languages</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About</div>
+  <h2>UK-based. Immediately available.<br>No sponsorship required.</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I am a <strong>Senior Technical Support and Cybersecurity professional</strong> with over two decades of international enterprise experience — spanning McAfee Enterprise, Trellix, Skyhigh Security, and Chanel's global IT infrastructure.</p>
+      <p>My specialism is <strong>2nd and 3rd line escalation support</strong> for complex security platforms: endpoint protection, DLP, CASB, EDR/XDR, and Microsoft 365 ecosystems. I have a consistent track record of reducing repeat ticket volumes by 40–60% through structured knowledge base development, runbook authoring, and process automation.</p>
+      <p>I am ITIL certified, multilingual (English, French, Portuguese, Spanish), and have supported enterprise clients across EMEA in finance, energy, luxury retail, and AI sectors.</p>
+      <div class="availability-badge">Immediately Available · Right to Work in UK</div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-pill">EDR / XDR / DLP / CASB</div>
+      <div class="skill-pill">Microsoft 365 & Intune</div>
+      <div class="skill-pill">Entra ID / Azure AD</div>
+      <div class="skill-pill">Conditional Access / MDM</div>
+      <div class="skill-pill">ITIL Incident Management</div>
+      <div class="skill-pill">ServiceNow / Zendesk / Jira</div>
+      <div class="skill-pill">Root Cause Analysis</div>
+      <div class="skill-pill">Power BI / SQL Reporting</div>
+      <div class="skill-pill">VMware / Citrix / AWS / AVD</div>
+      <div class="skill-pill">Windows Server / Win 10/11</div>
+      <div class="skill-pill">Knowledge Base Development</div>
+      <div class="skill-pill">SLA & Escalation Management</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <h2>Career History</h2>
+  <div class="timeline">
+
+    <div class="job reveal">
+      <div class="job-header">
+        <div class="job-title">Technical Support Consultant</div>
+        <div class="job-date">May 2025 – Dec 2025</div>
+      </div>
+      <div class="job-company">
+        Revolution AI Ltd · London, UK
+        <span class="contract-tag">Contract</span>
+      </div>
+      <ul class="job-bullets">
+        <li>Sole escalation point for an AI-driven care auditing SaaS platform — resolved all incidents within agreed SLA.</li>
+        <li>Migrated asset tracking from spreadsheets to AssetTiger ITAM, reducing average response times by <strong>~50%</strong>.</li>
+        <li>Built a Zendesk knowledge base from scratch, improving first-contact resolution and reducing support demand by <strong>~60%</strong>.</li>
+        <li>Authored GitBook technical documentation and go-to-market collateral supporting pre-sales revenue pipeline.</li>
+      </ul>
+    </div>
+
+    <div class="job reveal">
+      <div class="job-header">
+        <div class="job-title">2nd Line Support Engineer</div>
+        <div class="job-date">Mar 2024 – Jun 2024</div>
+      </div>
+      <div class="job-company">
+        Chanel · London, UK
+        <span class="contract-tag">Fixed-Term Contract</span>
+      </div>
+      <ul class="job-bullets">
+        <li>Delivered white-glove L2 IT support across corporate HQ and retail boutiques supporting <strong>500+ endpoints</strong>.</li>
+        <li>Administered Microsoft Intune, Entra ID, Conditional Access policies, and MDM device lifecycle management.</li>
+        <li>Supported enterprise rollout and end-user adoption of Microsoft Copilot across EMEA teams.</li>
+      </ul>
+    </div>
+
+    <div class="job reveal">
+      <div class="job-header">
+        <div class="job-title">Technical Writer</div>
+        <div class="job-date">Aug 2022 – Dec 2023</div>
+      </div>
+      <div class="job-company">
+        Skyhigh Security · Aylesbury, UK
+        <span class="contract-tag">Contract</span>
+      </div>
+      <ul class="job-bullets">
+        <li>Built a complete CASB and DLP documentation library from zero, serving thousands of enterprise customers globally.</li>
+        <li>Measurably increased self-service adoption and reduced repeat support cases through improved documentation quality.</li>
+        <li>Worked within Agile sprints alongside Engineering, Product, and Support teams to deliver content on schedule.</li>
+      </ul>
+    </div>
+
+    <div class="job reveal">
+      <div class="job-header">
+        <div class="job-title">Data Protection Specialist – L3 Support</div>
+        <div class="job-date">Nov 2021 – Jul 2022</div>
+      </div>
+      <div class="job-company">Trellix · Aylesbury, UK</div>
+      <ul class="job-bullets">
+        <li>Provided high-touch L3 support for enterprise DLP, encryption, and data protection to French-speaking finance and energy clients.</li>
+        <li>Diagnosed complex security incidents across network and endpoint layers with full root-cause analysis.</li>
+        <li>Built Power BI dashboards to visualise KPIs and customer health metrics for proactive account management.</li>
+      </ul>
+    </div>
+
+    <div class="job reveal">
+      <div class="job-header">
+        <div class="job-title">Tier III Technical Support Engineer – EMEA</div>
+        <div class="job-date">Sep 2014 – Oct 2021</div>
+      </div>
+      <div class="job-company">McAfee Enterprise · Aylesbury, UK</div>
+      <ul class="job-bullets">
+        <li>Primary escalation engineer for named enterprise accounts across EMEA — consistently resolved highest-severity P1 incidents within SLA.</li>
+        <li>Core member of the <strong>Global Malware Response Team</strong>, collaborating directly with McAfee Labs on novel threat investigation.</li>
+        <li>Supported EDR, advanced malware defence, TIE, and endpoint protection across <strong>10,000+ seat environments</strong>.</li>
+        <li>Authored knowledge base articles and runbooks that reduced repeat incident volume by over <strong>40%</strong> across the EMEA region.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="case-studies">
+  <div class="section-label">Portfolio</div>
+  <h2>Case Studies</h2>
+  <div class="cases-grid">
+
+    <div class="case-card reveal">
+      <div class="case-icon">⚡</div>
+      <div class="case-tag">Technical Support</div>
+      <div class="case-title">Driving Support Efficiency &amp; Reducing Incident Volume</div>
+      <p class="case-desc">Enterprise cybersecurity support optimisation project focused on reducing escalations and improving MTTR at scale across EMEA named accounts.</p>
+      <div class="case-metric">▲ 40%+ Reduction in Repeat Incidents</div>
+      <a href="https://github.com/ferteixeiraukfr-stack/ferteixeiraportfolio/blob/main/case-studies/technical-support.md" class="case-link" target="_blank">Read Case Study →</a>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-icon">🛡</div>
+      <div class="case-tag">Security Engineering</div>
+      <div class="case-title">Leveraging Threat Intelligence Exchange to Enhance Security Posture</div>
+      <p class="case-desc">Security engineering support initiative integrating real-time threat intelligence across endpoints and network layers using McAfee TIE.</p>
+      <div class="case-metric">▲ Enterprise-Wide TIE Deployment</div>
+      <a href="https://github.com/ferteixeiraukfr-stack/ferteixeiraportfolio/blob/main/case-studies/security-engineer.md" class="case-link" target="_blank">Read Case Study →</a>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-icon">📄</div>
+      <div class="case-tag">Technical Writing</div>
+      <div class="case-title">Building Effective Security Documentation for Complex Enterprise Features</div>
+      <p class="case-desc">Re-architecting enterprise DLP and CASB documentation from scratch to reduce ticket volume and dramatically improve customer onboarding.</p>
+      <div class="case-metric">▲ 60% Reduction in Support Demand</div>
+      <a href="https://github.com/ferteixeiraukfr-stack/ferteixeiraportfolio/blob/main/case-studies/technical-writer.md" class="case-link" target="_blank">Read Case Study →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Credentials</div>
+  <h2>Certifications</h2>
+  <div class="certs-grid reveal">
+    <div class="cert-item">
+      <div class="cert-icon">✦</div>
+      <div class="cert-name">ITIL Foundation v3 — Incident, Problem &amp; Change Management</div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">✦</div>
+      <div class="cert-name">Microsoft 365 Administration</div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">✦</div>
+      <div class="cert-name">Cloud Security Architecture for the Enterprise</div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">✦</div>
+      <div class="cert-name">Incident Response Planning</div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">✦</div>
+      <div class="cert-name">Automate Your Workflows with Generative AI</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" style="justify-content:center;">Contact</div>
+  <h2 style="text-align:center;">Let's talk.</h2>
+  <div class="contact-inner reveal">
+    <p>I am immediately available for permanent Technical Support, 2nd Line Support, or Technical Documentation roles in Greater London at c.£45,000. Right to work in the UK — no sponsorship required.</p>
+    <div class="contact-links">
+      <a href="mailto:gtex2018@gmail.com" class="btn-primary">✉ gtex2018@gmail.com</a>
+      <a href="https://github.com/ferteixeiraukfr-stack/ferteixeiraportfolio" class="btn-secondary" target="_blank">GitHub Portfolio</a>
+      <a href="tel:+447818688061" class="btn-secondary">📞 +44 7818 688061</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Fernando Teixeira · Aylesbury, UK</p>
+  <p>Senior Technical Support &amp; Cybersecurity Engineer</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
